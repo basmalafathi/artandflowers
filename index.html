@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <title>Art & Flowers | إنشاء حساب</title>
+    <link href="https://fonts.googleapis.com/css2?family=Aref+Ruqaa&family=Tajawal:wght@300;500&display=swap"
+        rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            font-family: 'Tajawal', sans-serif;
+            background: url(flower1.jpg);
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+
+        /* صندوق إنشاء الحساب */
+        .card {
+            background: rgba(255, 255, 255, 0.95);
+            width: 380px;
+            padding: 40px;
+            border-radius: 30px;
+            text-align: center;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+        }
+
+        /* النصوص العلوية */
+        .brand {
+            font-family: 'Times New Roman', serif;
+            font-style: italic;
+            font-size: 24px;
+            color: #4a5d45;
+            margin-bottom: 5px;
+        }
+
+        .poetic-text {
+            font-family: 'Aref Ruqaa', serif;
+            color: #6b7a67;
+            font-size: 18px;
+            margin-bottom: 20px;
+        }
+
+        h2 {
+            margin: 0;
+            font-size: 28px;
+            color: #333;
+        }
+
+        .subtitle {
+            color: #888;
+            font-size: 13px;
+            margin-bottom: 30px;
+        }
+
+        /* تنسيق الحقول */
+        input {
+            width: 100%;
+            padding: 12px 20px;
+            margin: 8px 0;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            box-sizing: border-box;
+            font-family: 'Tajawal', sans-serif;
+            outline: none;
+        }
+
+        input:focus {
+            border-color: #4a5d45;
+        }
+
+        /* الزر الأخضر */
+        .btn {
+            background-color: #4a5d45;
+            color: white;
+            padding: 14px;
+            border: none;
+            border-radius: 10px;
+            width: 100%;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 15px;
+            transition: 0.3s;
+        }
+
+        .btn:hover {
+            background-color: #384634;
+        }
+
+        /* الرابط السفلي */
+        .footer-link {
+            display: block;
+            margin-top: 20px;
+            color: #777;
+            text-decoration: none;
+            font-size: 13px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="card">
+        <div class="brand">Art & Flowers</div>
+        <div class="poetic-text">يليق بنا الورد ويليق بنا أن نزهر</div>
+        <h2>إنشاء حساب</h2>
+        <p class="subtitle">أنشئ حسابك واستمتع بتجربة تسوق مميزة</p>
+        <form id="signUpForm">
+            <input type="text" id="fullName" placeholder="الاسم الكامل" required>
+            <input type="email" id="email" placeholder="البريد الإلكتروني" required>
+            <input type="password" id="password" placeholder="كلمة المرور" required>
+            <button type="submit" class="btn">إنشاء حساب</button>
+        </form>
+
+        <a href="#" class="footer-link">لديك حساب بالفعل؟ تسجيل الدخول</a>
+
+    </div>
+    <script>
+        document.getElementById('signUpForm').addEventListener('submit', function (event) {
+            event.preventDefault(); // منع الصفحة من التحديث فوراً  
+
+            // أخذ البيانات التي كتبها المستخدم  
+            const name = document.getElementById('fullName').value;
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+
+            // حفظ البيانات في ذاكرة المتصفح (LocalStorage)  
+            localStorage.setItem('userEmail', email);
+            localStorage.setItem('userPassword', password);
+            localStorage.setItem('userName', name);
+            alert('تم إنشاء حسابك بنجاح  ' + name + '! جاري الانتقال للرئيسية...');
+            window.location.href = "home.html";
+        });  
+    </script>
+</body>
+
+</html>

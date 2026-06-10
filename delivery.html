@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <title>خدمة التوصيل | Art & Flowers</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Cairo', sans-serif;
+        }
+
+        body {
+            background-color: #ede2ec99;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 60px 20px;
+        }
+
+        /* الحاوية الرئيسية  */
+        .container {
+            width: 100%;
+            max-width: 750px;
+            text-align: center;
+            position: relative;
+        }
+
+        /* زر العودة للرئيسية  home.html */
+        .back-btn {
+            position: absolute;
+            top: -65px;
+            left: 0;
+            background-color: #ab7880;
+            color: white;
+            text-decoration: none;
+            padding: 10px 24px;
+            border-radius: 6px;
+            font-size: 15px;
+            font-weight: 600;
+            transition: 0.3s ease;
+            box-shadow: 0 2px 8px rgba(171, 120, 128, 0.2);
+        }
+
+        .back-btn:hover {
+            background-color: #925e65;
+            transform: translateY(-2px);
+        }
+
+        /* تكبير وتنسيق العناوين  */
+        .page-title {
+            color: #ab7880;
+            font-size: 40px;
+            font-weight: bold;
+            margin-bottom: 8px;
+            letter-spacing: 0.5px;
+        }
+
+        .description {
+            color: #615b60;
+            font-size: 16px;
+            margin-bottom: 40px;
+            line-height: 1.8;
+            max-width: 650px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* الكرت الرئيسي الأبيض  */
+        .form-card {
+            background-color: #ffffff;
+            border-radius: 24px;
+            padding: 50px 45px;
+            box-shadow: 0 10px 30px rgba(146, 94, 101, 0.08);
+            text-align: right;
+            border: 1px solid rgba(248, 245, 244, 0.7);
+        }
+
+        .form-group {
+            margin-bottom: 28px;
+        }
+
+        /* تكبير نصوص العناوين الفرعية والأيقونات */
+        .form-group label {
+            display: flex;
+            align-items: center;
+            color: #ab7880;
+            font-size: 17px;
+            margin-bottom: 12px;
+            font-weight: 600;
+        }
+
+        /* مظهر  للأيقونات داخل الكرت */
+        .form-group label i {
+            margin-left: 10px;
+            font-size: 19px;
+            color: #c99aa1;
+        }
+
+        /* تكبير  خانات الإدخال والاختيار */
+        .form-control {
+            width: 100%;
+            padding: 15px 18px;
+            border: 1px solid #e5d9e4;
+            border-radius: 12px;
+            font-size: 15px;
+            color: #333;
+            outline: none;
+            transition: all 0.3s ease;
+            background-color: #fefcfd;
+        }
+
+        .form-control:focus {
+            border-color: #ab7880;
+            background-color: #fff;
+            box-shadow: 0 0 0 4px rgba(171, 120, 128, 0.1);
+        }
+
+        select.form-control {
+            cursor: pointer;
+        }
+
+        textarea.form-control {
+            resize: vertical;
+            height: 100px;
+            line-height: 1.6;
+        }
+
+        /* زر الإرسال العريض  */
+        .submit-btn {
+            width: 100%;
+            background-color: #ab7880;
+            color: white;
+            border: none;
+            padding: 16px;
+            border-radius: 12px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 15px;
+            box-shadow: 0 4px 12px rgba(171, 120, 128, 0.15);
+        }
+
+        .submit-btn:hover {
+            background-color: #925e65;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(146, 94, 101, 0.25);
+        }
+
+        /* تذييل الصفحة السفلي */
+        .footer-text {
+            text-align: center;
+            margin-top: 35px;
+            color: #756e73;
+            font-size: 15px;
+            font-weight: 500;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <a href="home.html" class="back-btn">← العودة للرئيسية</a>
+
+        <h1 class="page-title">خدمة التوصيل</h1>
+        <p class="description">يرجى ملء تفاصيل العنوان بدقة لضمان وصول باقاتكم وهداياكم طازجة وفي الوقت المحدد تماماً.
+        </p>
+
+        <div class="form-card">
+            <form id="deliveryForm" onsubmit="confirmDelivery(event)">
+
+                <div class="form-group">
+                    <label><i class="fa-solid fa-location-dot"></i> المدينة / المنطقة:</label>
+                    <select class="form-control" required>
+                        <option value="">اختر المنطقة المطلوبة...</option>
+                        <option value="1">تعز </option>
+                        <option value="2">عدن</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label><i class="fa-solid fa-map-layer-group"></i> تفاصيل العنوان السكني:</label>
+                    <textarea class="form-control" placeholder="اسم الشارع، رقم المبنى، المعالم الشهيرة بالقرب منك..."
+                        required></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label><i class="fa-regular fa-clock"></i> وقت التوصيل :</label>
+                    <select class="form-control" required>
+                        <option value="morning">صباحاً (9:00 ص - 12:00 م)</option>
+                        <option value="afternoon">عصراً (4:00 م - 8:00 م)</option>
+                        <option value="evening">مساءً (8:00 م - 10:00 م)</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label><i class="fa-solid fa-phone"></i> رقم هاتف مستلم الشحنة:</label>
+                    <input type="tel" class="form-control" placeholder="مثال: 777704444" required>
+                </div>
+
+                <button type="submit" class="submit-btn">تأكيد تفاصيل التوصيل</button>
+            </form>
+        </div>
+
+        <div class="footer-text">🚗 شكراً لثقتكم بـ Art & Flowers 🚗</div>
+    </div>
+
+    <script>
+        function confirmDelivery(event) {
+            event.preventDefault(); // يمنع إعادة تحميل الصفحة
+
+            alert("تم حفظ وتأكيد تفاصيل التوصيل بنجاح! ✨");
+
+            // إعادة تعيين الخانات
+            document.getElementById("deliveryForm").reset();
+        }
+    </script>
+
+</body>
+
+</html>

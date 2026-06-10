@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Art & Flowers - إضافة باقة</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap');
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Cairo', sans-serif;
+        }
+
+        body {
+            background-color: #fcf8f7;
+            color: #4a3b32;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 5%;
+            background-color: #fff;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .navbar .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: #b36b77;
+        }
+
+        .navbar nav a {
+            text-decoration: none;
+            color: #6b5c53;
+            margin-right: 25px;
+            font-weight: 600;
+        }
+
+        .form-container {
+            max-width: 500px;
+            margin: 50px auto;
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            border: 1px solid #f2eae7;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.02);
+        }
+
+        .form-container h2 {
+            text-align: center;
+            color: #b36b77;
+            margin-bottom: 25px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #6b5c53;
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #e6dcd8;
+            border-radius: 8px;
+            outline: none;
+            font-size: 15px;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            border-color: #b36b77;
+        }
+
+        .btn-submit {
+            width: 100%;
+            background-color: #b36b77;
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .btn-submit:hover {
+            background-color: #9c5964;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header class="navbar">
+        <div class="logo">Art & Flowers</div>
+        <nav>
+            <a href="home.html">الرئيسية</a>
+            <a href="View.html">عرض الباقات</a>
+            <a href="add.html" style="color: #b36b77;">إضافة باقة</a>
+        </nav>
+    </header>
+
+    <div class="form-container">
+        <h2>إضافة باقة زهور جديدة</h2>
+        <form id="addFlowerForm" onsubmit="saveFlower(event)">
+            <div class="form-group">
+                <label>اسم الباقة:</label>
+                <input type="text" id="flowerName" required placeholder="مثال: Red Velvet Bouquet">
+            </div>
+            <div class="form-group">
+                <label>السعر (ريال):</label>
+                <input type="number" id="flowerPrice" min="1" required placeholder="مثال: 7500">
+            </div>
+            <div class="form-group">
+                <label>اختر رقم الصورة (من 1 إلى 24):</label>
+                <select id="flowerImg">
+                </select>
+            </div>
+            <button type="submit" class="btn-submit">حفظ وإضافة للباقات</button>
+        </form>
+    </div>
+
+    <script>
+        // تعبئة القائمة المنسدلة بالصور تلقائياً باستخدام علامات الاقتباس المائلة الصحيحة `` لضمان عملها
+        const select = document.getElementById('flowerImg');
+        for (let i = 1; i <= 24; i++) {
+            select.innerHTML += `<option value="images/images${i}.jpg">صورة رقم ${i}</option>;`
+        }
+
+        function saveFlower(event) {
+            event.preventDefault();
+            // جلب الباقات الحالية من مخزن المتصفح كما هي في كودك الأصلي
+            let flowers = JSON.parse(localStorage.getItem('flowers')) || [];
+
+            // تنظيف الاسم من المسافات وجلب السعر والصورة
+            const name = document.getElementById('flowerName').value.trim();
+            const price = parseInt(document.getElementById('flowerPrice').value);
+            const img = document.getElementById('flowerImg').value;
+
+            // 1.  منع الحقول الفارغة أو المسافات في الاسم
+            if (name === "") {
+                alert("عذراً، لا يمكن أن يكون اسم الباقة فارغاً!");
+                return;
+            }
+
+            // 2.  فحص صارم يمنع الحروف، الصفر، والأعداد السالبة في السعر
+            if (isNaN(price) || price <= 0) {
+                alert("عذراً، يجب إدخال سعر صحيح أكبر من صفر (يُمنع الصفر والسالب والحروف)!");
+                return;
+            }
+
+            // إنشاء كائن الباقة الجديدة بمعرف     
+            const newFlower = {
+                id: Date.now(),
+                name: name,
+                price: price,
+                img: img
+            };
+
+            // الحفظ الفعلي وإعادة التوجيه لصفحة العرض
+            flowers.push(newFlower);
+            localStorage.setItem('flowers', JSON.stringify(flowers));
+
+            alert("تم إضافة الباقة الجديدة بنجاح! سيتم توجيهك لصفحة العرض.");
+            window.location.href = 'View.html';
+        }
+    </script>
+</body>
+
+</html>

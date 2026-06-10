@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <title>إضافة كرت رسالة | Art & Flowers</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Cairo', sans-serif;
+        }
+
+        body {
+            background-color: #ede2ec99;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 60px 20px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 750px;
+            text-align: center;
+            position: relative;
+        }
+
+        .back-btn {
+            position: absolute;
+            top: -65px;
+            left: 0;
+            background-color: #ab7880;
+            color: white;
+            text-decoration: none;
+            padding: 10px 24px;
+            border-radius: 6px;
+            font-size: 15px;
+            font-weight: 600;
+            transition: 0.3s ease;
+            box-shadow: 0 2px 8px rgba(171, 120, 128, 0.2);
+        }
+
+        .back-btn:hover {
+            background-color: #925e65;
+            transform: translateY(-2px);
+        }
+
+        .page-title {
+            color: #ab7880;
+            font-size: 40px;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+
+        .slogan {
+            color: #875e66;
+            font-size: 26px;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+
+        .description {
+            color: #615b60;
+            font-size: 16px;
+            margin-bottom: 40px;
+            line-height: 1.8;
+        }
+
+        .form-card {
+            background-color: #ffffff;
+            border-radius: 24px;
+            padding: 50px 45px;
+            box-shadow: 0 10px 30px rgba(146, 94, 101, 0.08);
+            text-align: right;
+            border: 1px solid rgba(248, 245, 244, 0.7);
+        }
+
+        .form-group {
+            margin-bottom: 28px;
+        }
+
+        .form-group label {
+            display: flex;
+            align-items: center;
+            color: #ab7880;
+            font-size: 17px;
+            margin-bottom: 12px;
+            font-weight: 600;
+        }
+
+        .form-group label i {
+            margin-left: 10px;
+            font-size: 19px;
+            color: #c99aa1;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 15px 18px;
+            border: 1px solid #e5d9e4;
+            border-radius: 12px;
+            font-size: 15px;
+            color: #333;
+            outline: none;
+            transition: all 0.3s ease;
+            background-color: #fefcfd;
+        }
+
+        .form-control:focus {
+            border-color: #ab7880;
+            background-color: #fff;
+            box-shadow: 0 0 0 4px rgba(171, 120, 128, 0.1);
+        }
+
+        textarea.form-control {
+            resize: vertical;
+            height: 150px;
+        }
+
+        .submit-btn {
+            width: 100%;
+            background-color: #ab7880;
+            color: white;
+            border: none;
+            padding: 16px;
+            border-radius: 12px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 15px;
+            box-shadow: 0 4px 12px rgba(171, 120, 128, 0.15);
+        }
+
+        .submit-btn:hover {
+            background-color: #925e65;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(146, 94, 101, 0.25);
+        }
+
+        .footer-text {
+            text-align: center;
+            margin-top: 35px;
+            color: #756e73;
+            font-size: 15px;
+            font-weight: 500;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <a href="home.html" class="back-btn">← العودة للرئيسية</a>
+        <h1 class="page-title">إضافة كرت رسالة</h1>
+        <p class="slogan">"أخَبر مَن تُود أنك توده"</p>
+        <p class="description">اكتب كلماتك الخاصة، وسنتولى نحن صياغتها وطباعتها على كرت لطيف يرفق مع
+            هديتك
+            لجعلها أكثر تفرداً وتميزاً.</p>
+
+        <div class="form-card">
+            <form id="cardForm" onsubmit="confirmSave(event)">
+
+                <div class="form-group">
+                    <label><i class="fa-regular fa-user"></i> اسم المرسل (أو اتركه فارغاً):</label>
+                    <input type="text" class="form-control" placeholder="اكتب اسمك الكريم هنا...">
+                </div>
+
+                <div class="form-group">
+                    <label><i class="fa-solid fa-heart"></i> اسم المستلم:</label>
+                    <input type="text" class="form-control" placeholder="اسم الشخص المهدى إليه الباقة..." required>
+                </div>
+
+                <div class="form-group">
+                    <label><i class="fa-regular fa-envelope"></i> نص الرسالة :</label>
+                    <textarea class="form-control" placeholder="عبّر عن مشاعرك هنا، لتُطبع بكل حب على الكرت..."
+                        required></textarea>
+                </div>
+
+                <button type="submit" class="submit-btn">حفظ وتأكيد تفاصيل الكرت</button>
+            </form>
+        </div>
+
+        <div class="footer-text">🌷 شكراً لثقتكم بـ Art & Flowers 🌷</div>
+    </div>
+
+    <script>
+        function confirmSave(event) {
+            event.preventDefault(); // يمنع إعادة تحميل الصفحة
+
+            // إظهار نافذة تأكيد محلية بسيطة للزبون
+            alert("تم حفظ وتأكيد كرت الرسالة بنجاح ولصقه بالباقة! ✨");
+
+            // إعادة مسح البيانات المكتوبة في الخانات بعد الحفظ بنجاح
+            document.getElementById("cardForm").reset();
+        }
+    </script>
+
+</body>
+
+</html>

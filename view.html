@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Art & Flowers - عرض الباقات</title>
+    <link class="moz-none" rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap');
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Cairo', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(150deg, #fee9eceb, #f3ebe7);
+            color: #4a3b32;
+            font-size: 18px;
+        }
+
+        /* الهيدر / شريط التنقل */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 5%;
+            background-color: #fff;
+            box-shadow: 0 3px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .navbar .logo {
+            font-size: 28px;
+            font-weight: bold;
+            color: #b36b77;
+        }
+
+        .navbar nav {
+            display: flex;
+            align-items: center;
+        }
+
+        .navbar nav a {
+            text-decoration: none;
+            color: #6b5c53;
+            margin-right: 30px;
+            font-weight: 700;
+            font-size: 18px;
+            transition: 0.3s;
+            cursor: pointer;
+        }
+
+        .navbar nav a i {
+            font-size: 22px;
+            vertical-align: middle;
+        }
+
+        .navbar nav a.active,
+        .navbar nav a:hover {
+            color: #b36b77;
+        }
+
+        #cart-count {
+            background-color: #b36b77;
+            color: white;
+            padding: 4px 10px;
+            border-radius: 50%;
+            font-size: 14px;
+            margin-right: 5px;
+            font-weight: bold;
+        }
+
+        /* قسم التحكم والبحث والخصومات */
+        .controls-section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+            margin: 35px 0;
+        }
+
+        .search-box,
+        .discount-box {
+            position: relative;
+            width: 90%;
+            max-width: 550px;
+        }
+
+        .search-box input,
+        .discount-box input {
+            width: 100%;
+            padding: 15px 50px 15px 20px;
+            border: 2px solid #e6dcd8;
+            border-radius: 30px;
+            outline: none;
+            font-size: 18px;
+            background-color: #fff;
+            box-shadow: 0 3px 6px rgba(0, 0, 0, 0.02);
+            transition: 0.3s;
+        }
+
+        .search-box input:focus,
+        .discount-box input:focus {
+            border-color: #b36b77;
+        }
+
+        .search-box i,
+        .discount-box i {
+            position: absolute;
+            right: 22px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #b36b77;
+            font-size: 20px;
+        }
+
+        /* زر تطبيق الخصم */
+        .btn-discount {
+            position: absolute;
+            left: 8px;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: #b36b77;
+            color: white;
+            border: none;
+            padding: 8px 18px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 14px;
+            transition: 0.2s;
+        }
+
+        .btn-discount:hover {
+            background-color: #9c5964;
+        }
+
+        /* تنبيه الخصم النشط */
+        .discount-badge {
+            color: #2e7d32;
+            font-weight: bold;
+            font-size: 15px;
+            margin-top: -5px;
+            display: none;
+        }
+
+        /* شبكة الكروت الرئيسية */
+        .container {
+            padding: 0 5% 60px 5%;
+        }
+
+        .flowers-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 30px;
+        }
+
+        /* تصميم الكارت */
+        .card {
+            background: #fff;
+            border-radius: 20px;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.04);
+            border: 1px solid #f2eae7;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+        }
+
+        .card img {
+            width: 100%;
+            height: 240px;
+            object-fit: cover;
+            border-radius: 16px;
+        }
+
+        .card h3 {
+            font-size: 19px;
+            margin: 15px 0 8px 0;
+            color: #4a3b32;
+        }
+
+        .card .price {
+            color: #b36b77;
+            font-weight: bold;
+            font-size: 19px;
+            margin-bottom: 18px;
+        }
+
+        /* أزرار التحكم داخل الكارت */
+        .card-actions {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+        }
+
+        .btn-buy {
+            background-color: #b36b77;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 700;
+            font-size: 16px;
+            flex: 2;
+            transition: 0.2s;
+        }
+
+        .btn-buy:hover {
+            background-color: #9c5964;
+        }
+
+        /* أزرار الحذف والتعديل */
+        .btn-delete,
+        .btn-edit {
+            background-color: #f7ecee;
+            color: #b36b77;
+            border: none;
+            padding: 10px 14px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: 0.2s;
+        }
+
+        .btn-edit {
+            background-color: #eef7ec;
+            color: #2e7d32;
+        }
+
+        .btn-delete:hover {
+            background-color: #ebcfd4;
+        }
+
+        .btn-edit:hover {
+            background-color: #cfe2cb;
+        }
+
+        /* سلة المشتريات الجانبية */
+        .cart-sidebar {
+            position: fixed;
+            top: 0;
+            left: -420px;
+            width: 400px;
+            height: 100%;
+            background-color: #fff;
+            box-shadow: 5px 0 20px rgba(0, 0, 0, 0.15);
+            transition: 0.3s ease;
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .cart-sidebar.open {
+            left: 0;
+        }
+
+        .cart-header {
+            padding: 25px;
+            border-bottom: 1px solid #f2eae7;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .cart-header h3 {
+            font-size: 22px;
+        }
+
+        .close-cart {
+            background: none;
+            border: none;
+            font-size: 36px;
+            cursor: pointer;
+            color: #b36b77;
+        }
+
+        .cart-items {
+            flex: 1;
+            overflow-y: auto;
+            padding: 25px;
+        }
+
+        .cart-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #fcf8f7;
+        }
+
+        .cart-item img {
+            width: 65px;
+            height: 65px;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+
+        .cart-item-info h4 {
+            font-size: 16px;
+            color: #4a3b32;
+        }
+
+        .cart-item-info p {
+            color: #b36b77;
+            font-size: 15px;
+            font-weight: bold;
+        }
+
+        .cart-footer {
+            padding: 25px;
+            border-top: 1px solid #f2eae7;
+            background-color: #fcf8f7;
+        }
+
+        .cart-footer p {
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .price-strike {
+            text-decoration: line-through;
+            color: #aaa;
+            font-size: 16px;
+            margin-left: 10px;
+        }
+
+        .btn-checkout {
+            width: 100%;
+            background-color: #b36b77;
+            color: white;
+            border: none;
+            padding: 15px;
+            border-radius: 10px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .btn-checkout:hover {
+            background-color: #9c5964;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header class="navbar">
+        <div class="logo">Art & Flowers</div>
+        <nav>
+            <a href="home.html">الرئيسية</a>
+            <a href="View.html" class="active">عرض الباقات</a>
+            <a href="add.html">إضافة باقة</a>
+            <a onclick="toggleCart()">
+                <i class="fas fa-shopping-basket"></i> السلة
+                <span id="cart-count">0</span>
+            </a>
+        </nav>
+    </header>
+
+    <section class="controls-section">
+        <div class="search-box">
+            <input type="text" id="searchInput" oninput="searchFlowers()" placeholder="ابحث عن باقة معينة...">
+            <i class="fas fa-search"></i>
+        </div>
+
+        <div class="discount-box">
+            <input type="text" id="couponInput" placeholder="أدخل كود الخصم للمناسبة...">
+            <i class="fas fa-percentage"></i>
+            <button class="btn-discount" onclick="applyCoupon()">تطبيق</button>
+        </div>
+        <div id="discountBadge" class="discount-badge">✓ تم تطبيق خصم المناسبة 20% بنجاح!</div>
+    </section>
+
+    <main class="container">
+        <div class="flowers-grid" id="flowersContainer">
+        </div>
+    </main>
+
+    <div class="cart-sidebar" id="cartSidebar">
+        <div class="cart-header">
+            <h3>سلة المشتريات</h3>
+            <button onclick="toggleCart()" class="close-cart">&times;</button>
+        </div>
+        <div class="cart-items" id="cartItems">
+        </div>
+        <div class="cart-footer">
+            <p>الإجمالي: <span id="cartTotal">0</span> ريال</p>
+            <button class="btn-checkout" onclick="checkout()">إتمام الشراء</button>
+        </div>
+    </div>
+
+    <script>
+        const originalFlowersData = [
+            { id: 1, name: "Elegant Roses", price: 7000, img: "images/images1.jpg" },
+            { id: 2, name: "Sunshine Flowers", price: 6500, img: "images/images2.jpg" },
+            { id: 3, name: "Spring Bouquet", price: 4500, img: "images/images3.jpg" },
+            { id: 4, name: "Wedding Flowers", price: 10000, img: "images/images4.jpg" },
+            { id: 5, name: "Luxury Bouquet", price: 9000, img: "images/images5.jpg" },
+            { id: 6, name: "White Flowers", price: 5500, img: "images/images6.jpg" },
+            { id: 7, name: "Pink Roses", price: 6000, img: "images/images7.jpg" },
+            { id: 8, name: "Rose Bouquet", price: 5000, img: "images/images8.jpg" },
+            { id: 9, name: "Garden Mix", price: 7000, img: "images/images9.jpg" },
+            { id: 10, name: "Morning Bloom", price: 6000, img: "images/images10.jpg" },
+            { id: 11, name: "Golden Roses", price: 8500, img: "images/images11.jpg" },
+            { id: 12, name: "Lovely Bouquet", price: 5500, img: "images/images12.jpg" },
+            { id: 13, name: "Royal Flowers", price: 9500, img: "images/images13.jpg" },
+            { id: 14, name: "Blooming Day", price: 7500, img: "images/images14.jpg" },
+            { id: 15, name: "Soft Pink", price: 5000, img: "images/images15.jpg" },
+            { id: 16, name: "Red Love", price: 8000, img: "images/images16.jpg" },
+            { id: 17, name: "Purple Dream", price: 6200, img: "images/images17.jpg" },
+            { id: 18, name: "Pure White", price: 4800, img: "images/images18.jpg" },
+            { id: 19, name: "Summer Breeze", price: 7300, img: "images/images19.jpg" },
+            { id: 20, name: "Classic Red", price: 9000, img: "images/images20.jpg" },
+            { id: 21, name: "Violet Grace", price: 5500, img: "images/images21.jpg" },
+            { id: 22, name: "Autumn Glow", price: 6800, img: "images/images22.jpg" },
+            { id: 23, name: "Sweet Tulip", price: 8200, img: "images/images23.jpg" },
+            { id: 24, name: "Orchid Paradise", price: 12000, img: "images/images24.jpg" }
+        ];
+
+        if (!localStorage.getItem('flowers')) {
+            localStorage.setItem('flowers', JSON.stringify(originalFlowersData));
+        }
+
+        let flowers = JSON.parse(localStorage.getItem('flowers'));
+        let cart = JSON.parse(localStorage.getItem('cart')) || [];
+        let discountRate = 0;
+
+        function displayFlowers(dataToDisplay = flowers) {
+            const container = document.getElementById('flowersContainer');
+            container.innerHTML = '';
+            if (dataToDisplay.length === 0) {
+                container.innerHTML = `<p style="grid-column: 1/-1; text-align: center; color: #b36b77; padding: 50px; font-weight: 600;">عذراً، لم يتم العثور على باقات تطابق بحثك.</p>`;
+                return;
+            }
+
+            dataToDisplay.forEach(flower => {
+                container.innerHTML += `
+                <div class="card">          
+                    <img src="${flower.img}" onerror="this.src='https://via.placeholder.com/260x240?text=Art+%26+Flowers'" alt="${flower.name}">          
+                    <h3>${flower.name}</h3>          
+                    <div class="price">${flower.price} ريال</div>          
+                    <div class="card-actions">          
+                        <button class="btn-buy" onclick="addToCart(${flower.id})">شراء</button>
+                        <button class="btn-edit" onclick="editFlower(${flower.id})" title="تعديل بيانات الباقة">
+                            <i class="fas fa-edit"></i>
+                        </button>
+                        <button class="btn-delete" onclick="deleteFlower(${flower.id})" title="حذف هذه الباقة من العرض فورا">
+                            <i class="fas fa-trash-alt"></i>
+                        </button>
+                    </div>        
+                </div>`;
+            });
+            updateCartUI();
+        }
+
+        function searchFlowers() {
+            const query = document.getElementById('searchInput').value.toLowerCase();
+            const filtered = flowers.filter(f => f.name.toLowerCase().includes(query));
+            displayFlowers(filtered);
+        }
+
+        function deleteFlower(id) {
+            if (confirm("هل تريد حذف هذه الباقة من واجهة العرض نهائياً؟")) {
+                flowers = flowers.filter(f => f.id !== id);
+                localStorage.setItem('flowers', JSON.stringify(flowers));
+                displayFlowers();
+            }
+        }
+
+        function editFlower(id) {
+            // البحث عن الباقة باستخدام الـ id في المصفوفة الأصلية الموجودة بالصفحة
+            const flower = flowers.find(f => f.id === id);
+            if (!flower) return;
+
+            // 1. فحص اسم الباقة ومنع الحقول الفارغة أو المسافات
+            const newName = prompt("قم بتعديل اسم الباقة:", flower.name);
+            if (newName === null) return; // إذا ضغط إلغاء (Cancel)
+            if (newName.trim() === "") {
+                alert("⚠️ خطأ! لا يمكن ترك اسم الباقة فارغاً.");
+                return;
+            }
+
+            // 2. فحص السعر (يمنع الصفر، السالب، والحروف تماماً)
+            const newPrice = prompt("قم بتعديل سعر الباقة (بالريال):", flower.price);
+            if (newPrice === null) return;
+
+            const parsedPrice = parseFloat(newPrice);
+            if (isNaN(parsedPrice) || parsedPrice <= 0) {
+                alert("⚠️ خطأ في الإدخال! لا يمكنك وضع سعر صفر، قيمة سالبة، أو حروف.");
+                return;
+            }
+
+            // 3. فحص مسار الصورة ومنع الحقول الفارغة
+            const newImg = prompt("قم بتعديل مسار أو رابط الصورة:", flower.img);
+            if (newImg === null) return;
+            if (newImg.trim() === "") {
+                alert("⚠️ خطأ! لا يمكن ترك مسار الصورة فارغاً.");
+                return;
+            }
+
+            // 4. التعديل المباشر على الكائن (هذا الجزء اللي يخليه يحدّث فوراً)
+            flower.name = newName.trim();
+            flower.price = parsedPrice;
+            flower.img = newImg.trim();
+
+            // 5. حفظ المصفوفة المحدثة بالكامل في مخزن المتصفح
+            localStorage.setItem('flowers', JSON.stringify(flowers));
+            displayFlowers();
+
+            alert("✅ تم تحديث بيانات الباقة بنجاح!");
+        }
+
+        function applyCoupon() {
+            const coupon = document.getElementById("couponInput").value.trim().toLowerCase();
+            const badge = document.getElementById("discountBadge");
+            badge.style.display = "none";
+            if (coupon === "basmala") {
+                discountRate = 0.20;
+                alert("🎁 تم تطبيق كوبون BASMALA بنجاح!\nهدية من صاحبة المتجر لعملائنا الأعزاء (خصم 20%).");
+            } else if (coupon === "eidsaeed") {
+                discountRate = 0.25;
+                alert("🌙 تم تطبيق كوبون EIDSAEED بنجاح!\nهدية من متجرنا بمناسبة العيد (خصم 25%).");
+            } else if (coupon === "") {
+                discountRate = 0;
+            } else {
+                discountRate = 0;
+                alert("❌ كود الخصم غير صحيح!");
+            }
+
+            updateCartUI();
+        }
+
+        function toggleCart() {
+            document.getElementById('cartSidebar').classList.toggle('open');
+        }
+
+        //  الإضافة للسلة
+        function addToCart(id) {
+            const flower = flowers.find(f => f.id === id);
+            const cartItem = cart.find(item => item.id === id);
+
+            if (cartItem) {
+                cartItem.quantity += 1;
+            } else {
+                cart.push({ ...flower, quantity: 1 });
+            }
+
+            localStorage.setItem('cart', JSON.stringify(cart));
+            updateCartUI();
+
+            alert(`💐  تم إضافة باقة "${flower.name}" إلى سلتك بنجاح.`);
+            document.getElementById('cartSidebar').classList.add('open');
+        }
+        /* حذف من السلة*/
+        function removeFromCart(id) {
+            cart = cart.filter(item => item.id !== id);
+            localStorage.setItem('cart', JSON.stringify(cart));
+            updateCartUI();
+        }
+
+        function updateCartUI() {
+            const cartItemsContainer = document.getElementById('cartItems');
+            const cartCount = document.getElementById('cart-count');
+            const cartTotal = document.getElementById('cartTotal');
+            /*تفرغ العرض */
+            cartItemsContainer.innerHTML = '';
+            let total = 0;
+            let count = 0;
+            /* حساب الإجمالي*/
+            cart.forEach(item => {
+                total += item.price * item.quantity;
+                count += item.quantity;
+                /* عرض العناصر داخل السلة*/
+                cartItemsContainer.innerHTML += `
+                <div class="cart-item">          
+                    <img src="${item.img}" onerror="this.src='https://via.placeholder.com/65'" alt="${item.name}">          
+                    <div class="cart-item-info">          
+                        <h4>${item.name}</h4>          
+                        <p>${item.price} ريال × ${item.quantity}</p>          
+                    </div>          
+                    <button onclick="removeFromCart(${item.id})" style="background:none; border:none; color:#b36b77; cursor:pointer; font-size:20px;">          
+                        <i class="fas fa-times"></i>          
+                    </button>          
+                </div>`;
+            });
+            // تحديث عدد السلة
+            cartCount.innerText = count;
+            //تطبيق الخصم
+            if (discountRate > 0 && total > 0) {
+                let discountedTotal = total - (total * discountRate);
+                cartTotal.innerHTML = `<span class="price-strike">${total}</span> ${discountedTotal}`;
+            } else {
+                cartTotal.innerText = total;
+            }
+        }
+
+        function checkout() {
+            if (cart.length === 0) {
+                alert("السلة فارغة، يرجى إضافة باقات أولاً!");
+                return;
+            }
+            // إذا كانت السلة تحتوي على منتجات:
+            // - عرض رسالة شكر للمستخدم
+            // - تفريغ السلة بالكامل
+            // - حذف بيانات السلة من localStorage
+            // - إغلاق  السلة
+            alert("✨ شكراً لثقتكم بـ Art & Flowers! تم إرسال طلب شراء الباقات بنجاح.");
+            cart = [];
+            localStorage.removeItem('cart');
+            updateCartUI();
+            toggleCart();
+        }
+        window.onload = function () {
+            displayFlowers();
+        };
+    </script>
+</body>
+
+</html>

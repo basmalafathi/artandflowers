@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <title>Art & Flowers</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Cairo', sans-serif;
+        }
+
+        body {
+            background-color: #ede2ec99;
+        }
+
+        .my-header {
+            padding: 20px 50px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .brand-logo {
+            color: #ab7880;
+            font-size: 30px;
+            font-weight: bold;
+        }
+
+        .navigation-links a {
+            text-decoration: none;
+            color: #333333;
+            margin: 0 20px;
+            font-size: 16px;
+        }
+
+        .navigation-links a.active-link {
+            background-color: #fdebee;
+            color: #c99aa1;
+            padding: 5px 15px;
+            border-radius: 5px;
+        }
+
+        .profile-icon {
+            color: #e7a9b2;
+            font-size: 35px;
+        }
+
+        .main-banner {
+            height: 700px;
+            background-image:
+                linear-gradient(0, rgba(36, 27, 0, 0)),
+                url('flower.jpg');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding-right: 50px;
+            color: #f3d6e0;
+        }
+
+        .main-banner h1 {
+            font-size: 50px;
+        }
+
+        .main-banner h2 {
+            font-size: 60px;
+            font-weight: bold;
+            margin: 10px 0;
+            border-bottom: 4px solid #925e65;
+            width: 400px;
+            padding-bottom: 20px;
+        }
+
+        .main-banner p {
+            font-size: 40px;
+        }
+
+        /* حاوية الكروت المرتبة */
+        .cards-container {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        .top-row,
+        .bottom-row {
+            display: flex;
+            justify-content: center;
+            gap: 25px;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
+        }
+
+        a.card-link {
+            text-decoration: none;
+            color: inherit;
+            width: 31%;
+            min-width: 250px;
+        }
+
+        .single-card {
+            background-color: #ffffff;
+            border: 1px solid #f8f5f4;
+            border-radius: 15px;
+            padding: 30px 10px;
+            text-align: center;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .single-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .icon-circle {
+            background-color: #875e66dd;
+            color: #ffffff;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 15px auto;
+            font-size: 22px;
+            /* حجم الأيقونة الجديدة */
+        }
+
+        .single-card h3 {
+            font-size: 18px;
+            color: #160f0f;
+            margin-bottom: 5px;
+        }
+
+        .single-card p {
+            font-size: 14px;
+            color: #090706;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="my-header">
+        <div class="brand-logo">Art & Flowers</div>
+        <div class="navigation-links">
+            <a href="index.html" class="active-link">الرئيسية</a>
+            <a href="view.html">عرض الباقات</a>
+            <a href="about.html">نبذة عنا</a>
+            <a href="contact.html">تواصل معنا</a>
+        </div>
+        <div class="profile-icon">
+            <i class="fa-regular fa-user"></i>
+        </div>
+    </div>
+
+    <div class="main-banner">
+        <h1>مرحبًا بك في</h1>
+        <h2>Art & Flowers</h2>
+        <p>أجمل الباقات لتناسب كل مناسبة</p>
+    </div>
+    <div class="cards-container">
+
+        <div class="top-row">
+
+            <a href="view.html" class="card-link">
+                <div class="single-card">
+                    <div class="icon-circle"><i class="fa-solid fa-seedling"></i></div>
+                    <h3>عرض الباقات</h3>
+                    <p>عرض جميع الباقات</p>
+                </div>
+            </a>
+
+            <a href="add-card.html" class="card-link">
+                <div class="single-card">
+                    <div class="icon-circle">
+                        <i class="fa-solid fa-envelope-open-text"></i>
+                    </div>
+                    <h3>إضافة كرت رسالة</h3>
+                    <p>إضافة رسالة خاصة مع الهدية</p>
+                </div>
+            </a>
+        </div>
+
+        <div class="bottom-row">
+            <a href="delivery.html" class="card-link">
+                <div class="single-card">
+                    <div class="icon-circle"><i class="fa-solid fa-truck"></i></div>
+                    <h3>خدمة التوصيل</h3>
+                    <p>خيارات وتتبع خدمة التوصيل</p>
+                </div>
+            </a>
+
+            <a href="about.html" class="card-link">
+                <div class="single-card">
+                    <div class="icon-circle"><i class="fa-solid fa-circle-info"></i></div>
+                    <h3>نبذة عنا</h3>
+                    <p>التعرف على متجر Art & Flowers</p>
+                </div>
+            </a>
+
+            <a href="contact.html" class="card-link">
+                <div class="single-card">
+                    <div class="icon-circle"><i class="fa-solid fa-phone"></i></div>
+                    <h3>تواصل معنا</h3>
+                    <p>إرسال استفسار أو ملاحظة</p>
+                </div>
+            </a>
+        </div>
+
+    </div>
+
+</body>
+
+</html>
